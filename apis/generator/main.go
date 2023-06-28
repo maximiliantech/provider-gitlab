@@ -34,49 +34,16 @@ func main() {
 	// Defining arguments
 	if len(os.Args) != 4 {
 		//panic("Can not create execute. Please provide four parameters.")
-		// GitHub Team
-		/*uri = "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json"
-		pathDir = "apis/teams/v1alpha1"
-		kind = "Team"
+		// GitLab ProjectAccessToken
+		uri = "https://gitlab.com/gitlab-org/gitlab/-/raw/master/doc/api/openapi/openapi.yaml"
+		pathDir = "apis/projects/v1alpha1"
+		kind = "ProjectAccessToken"
 		version = "v1alpha1"
-		postPath = "/orgs/{org}/teams"
-		getPath = "/orgs/{org}/teams/{team_slug}"
-		putPath = ""
-		patchPath = "/orgs/{org}/teams/{team_slug}"
-		deletePath = "/orgs/{org}/teams/{team_slug}"*/
-
-		// GitHub Pages
-		/*uri = "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json"
-		pathDir = "apis/pages/v1alpha1"
-		kind = "PagesSite"
-		version = "v1alpha1"
-		postPath = "/repos/{owner}/{repo}/pages"
-		getPath = "/repos/{owner}/{repo}/pages"
-		putPath = "/repos/{owner}/{repo}/pages"
-		patchPath = ""
-		deletePath = "/repos/{owner}/{repo}/pages"*/
-
-		// GitHub Release
-		/*uri = "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json"
-		pathDir = "apis/releases/v1alpha1"
-		kind = "Release"
-		version = "v1alpha1"
-		postPath = "/repos/{owner}/{repo}/releases"
-		getPath = "/repos/{owner}/{repo}/releases/{release_id}"
-		putPath = ""
-		patchPath = "/repos/{owner}/{repo}/releases/{release_id}"
-		deletePath = "/repos/{owner}/{repo}/releases/{release_id}"*/
-
-		// GitHub Gist
-		uri = "https://raw.githubusercontent.com/github/rest-api-description/main/descriptions/api.github.com/api.github.com.json"
-		pathDir = "apis/gists/v1alpha1"
-		kind = "Gist"
-		version = "v1alpha1"
-		postPath = "/gists"
+		postPath = "/v4/projects/{id}/access_tokens"
 		getPath = "/gists/{gist_id}"
 		putPath = ""
-		patchPath = "/gists/{gist_id}"
-		deletePath = "/gists/{gist_id}"
+		patchPath = ""
+		deletePath = "/v4/projects/{id}/access_tokens/{token_id}"
 	} else {
 		uri = os.Args[1]
 		pathDir = os.Args[2]
