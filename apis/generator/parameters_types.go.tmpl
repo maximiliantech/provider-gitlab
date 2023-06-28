@@ -1,0 +1,12 @@
+package {{ .VERSION }}
+
+// {{.KIND}}Parameters are the configurable fields of a {{.KIND}}.
+type {{.KIND}}Parameters struct {
+   {{range $name, $field := .FIELDS}}
+   /* {{$field.Description}} */{{- printf "\n"}}
+   {{- if $field.IsImmutable}}// +kubebuilder:validation:XValidation:rule="self == oldSelf",message="{{$field.GolangName}} can't be updated once set"{{printf "\n"}}{{end}}
+   {{- if $field.Enum}}// +kubebuilder:validation:Enum={{range $field.Enum}}{{.}};{{end}}{{printf "\n"}}{{end}}
+   {{- if not $field.IsRequired}}// +optional{{printf "\n"}}{{end}}
+   {{- $field.GolangName}} {{$field.Type}} `json:"{{$field.JSONName}}{{if not $field.IsRequired}},omitempty{{end}}"`
+   {{end}}
+}
