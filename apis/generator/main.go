@@ -26,33 +26,32 @@ func main() {
 	var kind string
 	var version string
 	var postPath string
-	var getPath string
 	var patchPath string
 	var putPath string
 	var deletePath string
 
 	// Defining arguments
-	if len(os.Args) != 4 {
+	if len(os.Args) != 7 {
 		//panic("Can not create execute. Please provide four parameters.")
 		// GitLab ProjectAccessToken
 		uri = "https://gitlab.com/gitlab-org/gitlab/-/raw/master/doc/api/openapi/openapi.yaml"
-		pathDir = "apis/projects/v1alpha1"
-		kind = "ProjectAccessToken"
-		version = "v1alpha1"
 		postPath = "/v4/projects/{id}/access_tokens"
-		getPath = "/gists/{gist_id}"
 		putPath = ""
 		patchPath = ""
 		deletePath = "/v4/projects/{id}/access_tokens/{token_id}"
+		version = "v1alpha1"
+		kind = "ProjectAccessToken"
+		pathDir = "apis/projects/v1alpha1"
 	} else {
 		uri = os.Args[1]
-		pathDir = os.Args[2]
-		kind = os.Args[3]
-		version = os.Args[4]
-		postPath = os.Args[5]
-		patchPath = os.Args[6]
+		postPath = os.Args[2]
+		patchPath = os.Args[3]
+		deletePath = os.Args[4]
+		version = os.Args[5]
+		kind = os.Args[6]
+		pathDir = os.Args[7]
 	}
-	fmt.Println(postPath, getPath, patchPath, putPath, deletePath)
+	fmt.Println(postPath, patchPath, putPath, deletePath)
 
 	// Create URL
 	urlToOAPI, urlError := url.Parse(uri)
@@ -158,6 +157,12 @@ func typeCasting(typ *openapi3.Schema, required bool) string {
 		} else {
 			return "*int"
 		}
+	case "number":
+		if required {
+			return "float64"
+		} else {
+			return "*float64"
+		}
 	case "string":
 		if required {
 			return "string"
@@ -170,7 +175,7 @@ func typeCasting(typ *openapi3.Schema, required bool) string {
 		} else {
 			return "*bool"
 		}
-	case "array":
+		/*case "array":
 		switch typ.Items.Value.Type {
 		case "string":
 			if required {
@@ -178,11 +183,17 @@ func typeCasting(typ *openapi3.Schema, required bool) string {
 			} else {
 				return "*[]string"
 			}
-		case "int":
+		case "integer":
 			if required {
 				return "[]int"
 			} else {
 				return "*[]int"
+			}
+		case "number":
+			if required {
+				return "[]float64"
+			} else {
+				return "*[]float64"
 			}
 		case "boolean":
 			if required {
@@ -190,7 +201,7 @@ func typeCasting(typ *openapi3.Schema, required bool) string {
 			} else {
 				return "*[]bool"
 			}
-		}
+		}*/
 	}
 	return ""
 }
